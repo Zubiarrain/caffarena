@@ -54,9 +54,9 @@ export default function Home() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl md:text-6xl font-bold mb-4">Probá la Diferencia</h2>
             <p className="text-xl mb-8">Pizzas artenasales hechas con pasión y los mejores ingredientes</p>
-            <a href="#menu" className="bg-yellow-500 text-black text-lg px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors">
+            <Link href="/menu" className="bg-yellow-500 text-black text-lg px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors">
               Ver menú
-            </a>
+            </Link>
           </div>
         </section>
 
