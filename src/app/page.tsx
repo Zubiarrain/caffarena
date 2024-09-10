@@ -1,101 +1,136 @@
-import Image from "next/image";
+"use client"
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { ChevronDown, Pizza, Clock, MapPin, Phone } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  return (
+    <div className="min-h-screen bg-white text-black">
+      <header className="fixed top-0 left-0 right-0 bg-white z-50">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+              <Image 
+              src="/logo.png" 
+              alt="Caffarena Pizza Logo" 
+              className="h-12 w-14" 
+              width={80}
+              height={80}
+              />
+            <h1 className="text-2xl font-bold">Caffarena Pizza</h1>
+          </div>
+          <nav className="hidden md:flex space-x-8">
+            <Link href="/menu" className="hover:text-yellow-500 transition-colors">Menú</Link>
+            <Link href="#about" className="hover:text-yellow-500 transition-colors">Nosotros</Link>
+            <Link href="#contact" className="hover:text-yellow-500 transition-colors">Contacto</Link>
+          </nav>
+          <button 
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <ChevronDown className={`transform transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+          </button>
         </div>
+        {isMenuOpen && (
+          <motion.nav 
+            className="md:hidden bg-white"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <Link href="/menu" className="block px-4 py-2 hover:bg-gray-100">Menú</Link>
+            <Link href="#about" className="block px-4 py-2 hover:bg-gray-100">Nosotros</Link>
+            <Link href="#contact" className="block px-4 py-2 hover:bg-gray-100">Contacto</Link>
+          </motion.nav>
+        )}
+      </header>
+
+      <main className="pt-20">
+        <section className="hero bg-black text-white py-20">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl md:text-6xl font-bold mb-4">Probá la Diferencia</h2>
+            <p className="text-xl mb-8">Pizzas artenasales hechas con pasión y los mejores ingredientes</p>
+            <a href="#menu" className="bg-yellow-500 text-black text-lg px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors">
+              Ver menú
+            </a>
+          </div>
+        </section>
+
+        <section id="menu" className="py-20">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">Las más aclamadas</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {['Caffarena', 'Napolitana', 'Cheddar y panceta'].map((pizza) => (
+                <div key={pizza} className="bg-gray-100 p-6 rounded-lg">
+                  <Pizza className="w-16 h-16 mb-4 text-yellow-500" />
+                  <h3 className="text-xl font-bold mb-2">{pizza}</h3>
+                  <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="bg-black text-white py-20">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">Caffarena Pizza</h2>
+            <div className="flex flex-col md:flex-row items-center md:space-x-5">
+              <div className="md:w-1/2 mb-8 md:mb-0 flex justify-center">
+                <Image 
+                src="/oso-caffarena.jpeg" 
+                alt="Caffarena Pizza Mascota" 
+                className="rounded-lg shadow-lg" 
+                width={350}
+                height={350}
+                />
+              </div>
+              <div className="md:w-1/2 md:pl-4">
+                <p className="text-xl mb-4">
+                En Caffarena Pizza, creemos en el poder de la buena comida para unir a las personas. Nuestro viaje comenzó con la pasión por crear la pizza perfecta, y desde entonces hemos estado sirviendo sonrisas.
+                </p>
+                <p className="text-xl">
+                Usando solo los ingredientes más frescos y técnicas tradicionales, elaboramos cada pizza con cuidado y atención a los detalles. ¡Vení y probá la diferencia en Caffarena Pizza!
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="py-20">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">Contáctanos</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <Clock className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
+                <h3 className="text-xl font-bold mb-2">Horarios</h3>
+                <p>Lun-Vie: 12hs - 15hs y 19hs - 23hs</p>
+                <p>Sábados: 19hs - 23hs</p>
+              </div>
+              <div className="text-center">
+                <MapPin className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
+                <h3 className="text-xl font-bold mb-2">Ubicación</h3>
+                <p>62 esquina 2</p>
+                <p>La Plata, Buenos Aires</p>
+              </div>
+              <div className="text-center">
+                <Phone className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
+                <h3 className="text-xl font-bold mb-2">Teléfono</h3>
+                <p>2215455016</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="bg-black text-white py-8">
+        <div className="container mx-auto px-4 text-center">
+          <p>&copy; 2024 Caffarena Pizza. All rights reserved.</p>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
