@@ -1,7 +1,9 @@
 export type MenuItem = {
-    id: string
-    name: string
-    price: number
-    category: 'pizza' | 'empanada' | 'bebida'
-    image: string
+  id: string
+  name: string
+  price: number
+  priceHorneada: number
+  pricePorHornear: number
+  category: 'pizza' | 'empanada' | 'bebida'
+  image: string
 }

@@ -1,53 +1,15 @@
 "use client"
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ChevronDown, Pizza, Clock, MapPin, Phone } from 'lucide-react'
+import { Pizza, Clock, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { NavBar } from '@/components/shared/NavBar'
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <div className="min-h-screen bg-white text-black">
-      <header className="fixed top-0 left-0 right-0 bg-white z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-              <Image 
-              src="/logo.png" 
-              alt="Caffarena Pizza Logo" 
-              className="h-12 w-14" 
-              width={80}
-              height={80}
-              />
-            <h1 className="text-2xl font-bold">Caffarena Pizza</h1>
-          </div>
-          <nav className="hidden md:flex space-x-8">
-            <Link href="/menu" className="hover:text-yellow-500 transition-colors">Menú</Link>
-            <Link href="#about" className="hover:text-yellow-500 transition-colors">Nosotros</Link>
-            <Link href="#contact" className="hover:text-yellow-500 transition-colors">Contacto</Link>
-          </nav>
-          <button 
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <ChevronDown className={`transform transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-          </button>
-        </div>
-        {isMenuOpen && (
-          <motion.nav 
-            className="md:hidden bg-white"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-          >
-            <Link href="/menu" className="block px-4 py-2 hover:bg-gray-100">Menú</Link>
-            <Link href="#about" className="block px-4 py-2 hover:bg-gray-100">Nosotros</Link>
-            <Link href="#contact" className="block px-4 py-2 hover:bg-gray-100">Contacto</Link>
-          </motion.nav>
-        )}
-      </header>
+      <NavBar/>
 
       <main className="pt-20">
         <section className="hero bg-black text-white py-20">
