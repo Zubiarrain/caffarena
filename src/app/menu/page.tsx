@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Pizza, Coffee, Utensils, ShoppingCart, Plus, Minus, Trash2 } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
@@ -8,13 +8,14 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { menuItems } from '@/lib/constants'
 import { CartItem } from '@/definitions/CartItem'
 import { MenuItem } from '@/definitions/MenuItem'
 import { OrderDetails } from '@/definitions/OrderDetails'
+import { CldImage } from 'next-cloudinary';
 
 export default function Menu() {
   const [cart, setCart] = useState<CartItem[]>([])
+  const [menuItems, setMenuItems] = useState<MenuItem[]>()
   const [isHalfPizzaModalOpen, setIsHalfPizzaModalOpen] = useState(false)
   const [selectedHalfPizza, setSelectedHalfPizza] = useState<MenuItem | null>(null)
   const [selectedSecondHalf, setSelectedSecondHalf] = useState<MenuItem | null>(null)
@@ -31,6 +32,16 @@ export default function Menu() {
       floor: ''
     }
   })
+
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      const response = await fetch('/api/menu');
+      const data: MenuItem[] = await response.json();
+      setMenuItems(data);
+    };
+
+    fetchMenuItems();
+  }, []);
 
   const updateCart = useCallback((item: MenuItem, cookingPreference?: 'horneada' | 'para hornear', quantity: number = 1) => {
     setCart(prevCart => {
@@ -165,7 +176,13 @@ export default function Menu() {
 
     return (
       <div key={item.id} className="bg-white p-4 rounded-lg shadow flex flex-col">
-        <img src={item.image} alt={item.name} className="w-full h-32 object-cover rounded-md mb-4" />
+        <CldImage 
+        src={item.image} 
+        alt={item.name}
+        width="500"
+        height="500"
+        className="w-full h-32 object-cover rounded-md mb-4" 
+        />
         <h3 className="text-lg font-semibold mb-2">{item.name}</h3>
         <p className="text-gray-600 mb-4">Horneada: ${item.priceHorneada.toFixed(2)} | Para hornear: ${item.pricePorHornear.toFixed(2)}</p>
         <div className="flex flex-col gap-2 mt-auto">
@@ -247,7 +264,13 @@ export default function Menu() {
 
     return (
       <div key={item.id} className="bg-white p-4 rounded-lg shadow flex flex-col">
-        <img src={item.image} alt={item.name} className="w-full h-32 object-cover rounded-md mb-4" />
+        <CldImage 
+        src={item.image} 
+        alt={item.name}
+        width="500"
+        height="500"
+        className="w-full h-32 object-cover rounded-md mb-4" 
+        />
         <h3 className="text-lg font-semibold mb-2">{item.name}</h3>
         <p className="text-gray-600 mb-4">${item.price.toFixed(2)}</p>
         <div className="flex items-center justify-between mt-auto">
@@ -276,6 +299,12 @@ export default function Menu() {
       </div>
     )
   }, [cart, updateCart])
+
+  if (!menuItems) {
+    return (
+      <div>Cargando...</div>
+    )
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
