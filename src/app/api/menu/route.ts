@@ -22,7 +22,7 @@ const getGoogleSheetData = async () => {
     console.log('obtengo datos...')
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
-      range: 'menu!A:G',
+      range: 'menu!A1:G30',
     });
 
     const rows = response.data.values;
@@ -41,13 +41,7 @@ const getGoogleSheetData = async () => {
         image: row[6],
     }));
     console.log('devuelvo menuItems...', menuItems)
-    return {
-      menuItems:menuItems,
-      private_key:PRIVATE_KEY,
-      client_email:process.env.GOOGLE_CLIENT_EMAIL,
-      spreadsheetId:spreadsheetId,
-      response:response
-    };
+    return menuItems
   } catch (error) {
     console.error('Error fetching Google Sheets data:', error);
     return [];
@@ -62,7 +56,7 @@ export async function GET() {
     if (!menuItems) {
       return NextResponse.json({ error: 'No se obtuvo información' });
     }
-    return NextResponse.json(menuItems);
+    return NextResponse.json({data:menuItems});
   } catch (error) {
     console.error('Error buscando información del menú:', error);
     return NextResponse.json({ error: 'Internal Error' });
