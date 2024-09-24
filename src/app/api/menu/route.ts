@@ -1,4 +1,4 @@
-import { getGoogleSheetData } from '@/app/utils/googleSheets';
+import { getGoogleSheetData } from '@/utils/googleSheets';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
