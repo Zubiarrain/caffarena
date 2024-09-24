@@ -41,7 +41,13 @@ const getGoogleSheetData = async () => {
         image: row[6],
     }));
     console.log('devuelvo menuItems...', menuItems)
-    return menuItems;
+    return {
+      menuItems:menuItems,
+      private_key:PRIVATE_KEY,
+      client_email:process.env.GOOGLE_CLIENT_EMAIL,
+      spreadsheetId:spreadsheetId,
+      response:response
+    };
   } catch (error) {
     console.error('Error fetching Google Sheets data:', error);
     return [];
