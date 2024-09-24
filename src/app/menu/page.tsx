@@ -12,7 +12,6 @@ import { CartItem } from '@/definitions/CartItem'
 import { MenuItem } from '@/definitions/MenuItem'
 import { OrderDetails } from '@/definitions/OrderDetails'
 import { CldImage } from 'next-cloudinary';
-import { getMenuItems } from '@/utils/getMenuItems'
 
 export default function Menu() {
   const [cart, setCart] = useState<CartItem[]>([])
@@ -36,8 +35,8 @@ export default function Menu() {
 
   useEffect(() => {
     const fetchMenuItems = async () => {
-      const data: MenuItem[] = await getMenuItems()
-      console.log('page',data)
+      const response = await fetch('/api/menu');
+      const data: MenuItem[] = await response.json();
       setMenuItems(data);
     };
 

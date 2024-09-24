@@ -1,3 +1,5 @@
+"use server"
+
 import { MenuItem } from '@/definitions/MenuItem';
 import { google } from 'googleapis';
 import dotenv from 'dotenv'
