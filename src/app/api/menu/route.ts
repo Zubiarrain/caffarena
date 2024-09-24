@@ -15,7 +15,7 @@ const auth = new google.auth.GoogleAuth({
 
 const spreadsheetId = process.env.SPREADSHEET_ID
 
-export const getGoogleSheetData = async () => {
+const getGoogleSheetData = async () => {
   try {
     console.log('busco sheets...')
     const sheets = google.sheets({ version: 'v4', auth });
