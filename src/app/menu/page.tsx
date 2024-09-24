@@ -37,6 +37,7 @@ export default function Menu() {
     const fetchMenuItems = async () => {
       const response = await fetch('/api/menu');
       const data: MenuItem[] = await response.json();
+      console.log('page',data)
       setMenuItems(data);
     };
 

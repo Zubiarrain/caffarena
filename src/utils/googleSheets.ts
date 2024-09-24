@@ -16,9 +16,9 @@ const spreadsheetId = process.env.SPREADSHEET_ID
 
 export const getGoogleSheetData = async () => {
   try {
-
+    console.log('busco sheets...')
     const sheets = google.sheets({ version: 'v4', auth });
-
+    console.log('obtengo datos...')
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
       range: 'menu!A:G',
@@ -39,7 +39,7 @@ export const getGoogleSheetData = async () => {
         category: row[0] as 'pizza' | 'empanada' | 'bebida', // Cast a los valores del enum category
         image: row[6],
     }));
-
+    console.log('devuelvo menuItems...', menuItems)
     return menuItems;
   } catch (error) {
     console.error('Error fetching Google Sheets data:', error);

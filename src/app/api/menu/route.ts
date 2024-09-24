@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   try {
     const menuItems = await getGoogleSheetData();
+    console.log('route',menuItems)
     if (!menuItems) {
       return NextResponse.json({ error: 'No se obtuvo información' });
     }
